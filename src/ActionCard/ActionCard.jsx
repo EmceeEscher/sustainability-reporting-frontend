@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './ActionCard.less';
 
 class ActionCard extends React.Component {
@@ -9,7 +10,12 @@ class ActionCard extends React.Component {
         };
     }
 
+    getActions() {
+        this.props.ajaxService.getAllActions();
+    }
+
     render () {
+        this.getActions();
         return (
             <div className='-actionCard'>
                 ActionTitle
@@ -17,5 +23,11 @@ class ActionCard extends React.Component {
         );
     }
 }
+
+
+
+ActionCard.propTypes = {
+    ajaxService: PropTypes.object.isRequired
+};
 
 export default ActionCard;
