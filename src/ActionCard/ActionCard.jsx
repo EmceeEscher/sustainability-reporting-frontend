@@ -3,19 +3,22 @@ import PropTypes from 'prop-types';
 import './ActionCard.less';
 
 class ActionCard extends React.Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
-            expanded: false
+            expanded: false,
+            actionData: {}
         };
+        this.getActions();
     }
 
     getActions() {
-        this.props.ajaxService.getAllActions();
+        this.props.ajaxService.getAllActions().then(data => this.setState({actionData: data}));
     }
 
     render () {
-        this.getActions();
+        console.log("testActionData: ");
+        console.log(this.state.actionData);
         return (
             <div className='-actionCard'>
                 ActionTitle
