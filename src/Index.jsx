@@ -3,20 +3,31 @@ import ActionCard from './ActionCard/ActionCard.jsx';
 import AjaxService from './ajax-service/AjaxService.jsx';
 
 class Index extends React.Component {
-  constructor(){
-    super();
-    this.state = {
-      ajaxService: new AjaxService()
-    };
-  }
+    constructor(){
+        super();
+        this.state = {
+            ajaxService: new AjaxService(),
+            actions: {}
+        };
+        this.getActions();
+    }
 
-  render() {
-    return (
-      <div>
-        <ActionCard ajaxService={this.state.ajaxService}/>
-      </div>
-    );
-  }
+    getActions() {
+        this.state.ajaxService.getAllActions().then(response => this.setState({actions: response.data}));
+    }
+
+    render() {
+        if(this.state.actions.length > 0){
+            return (
+                <div>
+                  <ActionCard actionData={this.state.actions[0]}/>
+                </div>
+            );
+        }
+        return (
+            <div/>
+        );
+    }
 }
 
 export default Index;
