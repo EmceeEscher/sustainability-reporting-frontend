@@ -15,7 +15,10 @@ class ActionCard extends React.Component {
         console.log(this.props.actionData);
         return (
             <div className='-actionCard'>
-                ActionTitle
+                <div className='-title'>
+                    {this.props.actionData.title}
+                </div>
+                <div>{"Description: " + this.props.actionData.description}</div>
             </div>
         );
     }
