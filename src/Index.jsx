@@ -20,7 +20,7 @@ class Index extends React.Component {
         if(this.state.actions.length > 0){
             return (
                 <div>
-                  <ActionCard actionData={this.state.actions[0]}/>
+                  <ActionCard actionData={this.state.actions[0]} ajaxService={this.state.ajaxService}/>
                 </div>
             );
         }

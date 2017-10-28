@@ -24,12 +24,19 @@ module.exports = {
         test: /\.less$/,
         exclude: /node_modules/,
         use: [{
-            loader: "style-loader" // creates style nodes from JS strings
+          loader: "style-loader" // creates style nodes from JS strings
         }, {
-            loader: "css-loader" // translates CSS into CommonJS
+          loader: "css-loader" // translates CSS into CommonJS
         }, {
-            loader: "less-loader" // compiles Less to CSS
+          loader: "less-loader" // compiles Less to CSS
         }]
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/,
+        exclude: /node_modules/,
+        use: [
+          'file-loader',
+        ]
       }
     ],
   },
