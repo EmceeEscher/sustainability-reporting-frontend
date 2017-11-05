@@ -1,6 +1,7 @@
 import React from 'react';
 import ActionCard from './ActionCard/ActionCard.jsx';
 import AjaxService from './ajax-service/AjaxService.jsx';
+import MainActionPanel from './MainActionPanel/MainActionPanel.jsx';
 
 class Index extends React.Component {
     constructor(){
@@ -20,7 +21,7 @@ class Index extends React.Component {
         if(this.state.actions.length > 0){
             return (
                 <div>
-                  <ActionCard actionData={this.state.actions[0]} ajaxService={this.state.ajaxService}/>
+                  <MainActionPanel actions={this.state.actions} ajaxService={this.state.ajaxService}/>
                 </div>
             );
         }

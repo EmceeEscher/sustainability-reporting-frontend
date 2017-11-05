@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import './ActionCard.less';
 import arrow from '../Resources/triangle.png';
 import downArrow from '../Resources/down-triangle.png';
+import MetricPanel from '../MetricPanel/MetricPanel.jsx';
 
 class ActionCard extends React.Component {
     constructor(){
@@ -13,6 +14,7 @@ class ActionCard extends React.Component {
         };
 
         this.toggleExpand = this.toggleExpand.bind(this);
+        this.renderMetricPanels = this.renderMetricPanels.bind(this);
     }
 
     toggleExpand(){
@@ -20,7 +22,7 @@ class ActionCard extends React.Component {
             () => {
                 if(this.state.metricInfo === null){
                     this.props.ajaxService.getMetricForAction(this.props.actionData.actionId).then(
-                        response => this.setState({metricInfo: response.data[0]}));
+                        response => this.setState({metricInfo: response.data}));
                 }
             });
     }
@@ -49,8 +51,18 @@ class ActionCard extends React.Component {
                     {this.props.actionData.title}
                 </div>
                 <div>{"Description: " + this.props.actionData.description}</div>
+                {this.renderMetricPanels()}
             </div>
         );
+    }
+
+    renderMetricPanels () {
+        let metricPanels = null;
+        if (this.state.metricInfo !== null) {
+            metricPanels = this.state.metricInfo.map(metric =>
+                <MetricPanel key={metric.metricId} metricInfo={metric} ajaxService={this.props.ajaxService}/>);
+        }
+        return metricPanels;
     }
 }
 
