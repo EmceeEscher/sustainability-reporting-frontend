@@ -28,11 +28,6 @@ class ActionCard extends React.Component {
     }
 
     render () {
-        console.log("testActionData: ");
-        console.log(this.props.actionData);
-        console.log("metricInfo: ");
-        console.log(this.state.metricInfo);
-
         if (!this.state.expanded) {
             return(
                 <div className='-actionCard'>
