@@ -5,12 +5,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.less';
 
 class SectionTabBar extends React.Component {
-    constructor (props) {
-        super(props);
-
-        this.state = {
-            currentTab: props.tabs[0]
-        };
+    constructor () {
+        super();
 
         this.renderTabs = this.renderTabs.bind(this);
         this.dontRenderPanels = this.dontRenderPanels.bind(this);
@@ -22,7 +18,7 @@ class SectionTabBar extends React.Component {
 
     dontRenderPanels () {
         //These empty panels are necessary to make the react-tabs components work, but I don't actually want to display anything
-        return this.props.tabs.map(tab => <TabPanel/>);
+        return this.props.tabs.map(tab => <TabPanel key={tab}/>);
     }
 
     render () {
