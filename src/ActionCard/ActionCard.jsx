@@ -3,18 +3,22 @@ import PropTypes from 'prop-types';
 import './ActionCard.less';
 import arrow from '../Resources/triangle.png';
 import downArrow from '../Resources/down-triangle.png';
+import emptyStar from '../Resources/empty-star.png';
+import fullStar from '../Resources/filled-star.png';
 import MetricPanel from '../MetricPanel/MetricPanel.jsx';
 
 class ActionCard extends React.Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             expanded: false,
-            metricInfo: null
+            metricInfo: null,
+            starIcon: props.isImportant ? fullStar : emptyStar
         };
 
         this.toggleExpand = this.toggleExpand.bind(this);
         this.renderMetricPanels = this.renderMetricPanels.bind(this);
+        this.toggleImportant = this.toggleImportant.bind(this);
     }
 
     toggleExpand(){
@@ -27,11 +31,20 @@ class ActionCard extends React.Component {
             });
     }
 
+    toggleImportant () {
+        if(this.state.starIcon === emptyStar) {
+            this.setState({starIcon: fullStar});
+        } else {
+            this.setState({starIcon: emptyStar});
+        }
+    }
+
     render () {
         if (!this.state.expanded) {
             return(
                 <div className='-actionCard'>
                     <img className='-toggleArrow' src={arrow} alt='expand' onClick={this.toggleExpand}/>
+                    <img className='-star' src={this.state.starIcon} onClick={this.toggleImportant}/>
                     <div className='-title'>
                         {this.props.actionData.title}
                     </div>
@@ -42,6 +55,7 @@ class ActionCard extends React.Component {
         return (
             <div className='-actionCard'>
                 <img className='-toggleArrow' src={downArrow} alt='expand' onClick={this.toggleExpand}/>
+                <img className='-star' src={this.state.starIcon} onClick={this.toggleImportant}/>
                 <div className='-title'>
                     {this.props.actionData.title}
                 </div>
@@ -63,7 +77,8 @@ class ActionCard extends React.Component {
 
 ActionCard.propTypes = {
     actionData: PropTypes.object.isRequired,
-    ajaxService: PropTypes.object.isRequired
+    ajaxService: PropTypes.object.isRequired,
+    isImportant: PropTypes.bool.isRequired
 };
 
 export default ActionCard;

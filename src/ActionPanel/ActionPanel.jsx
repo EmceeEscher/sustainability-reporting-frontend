@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './MainActionPanel.less';
+import './ActionPanel.less';
 import ActionCard from '../ActionCard/ActionCard.jsx';
 import SectionTabBar from '../SectionTabBar/SectionTabBar.jsx';
 
-class MainActionPanel extends React.Component {
+class ActionPanel extends React.Component {
     constructor (props) {
         super(props);
 
@@ -32,7 +32,7 @@ class MainActionPanel extends React.Component {
 
     render(){
         return (
-            <div className='-MainActionPanel'>
+            <div className='-ActionPanel'>
                 <SectionTabBar tabs={this.state.themes} updateTheme={this.updateCurrentTheme}/>
                 {this.renderActions()}
             </div>
@@ -41,15 +41,21 @@ class MainActionPanel extends React.Component {
 
     renderActions() {
         let currThemeActions = this.props.actions.filter(action => action.theme === this.state.currentTheme);
+        debugger;
         return currThemeActions.map(action =>
-            <ActionCard actionData={action} ajaxService={this.props.ajaxService} key={action.actionId}/>
+            <ActionCard
+                actionData={action}
+                ajaxService={this.props.ajaxService}
+                isImportant={this.props.isImpActionPanel ? true : action.isImportant}
+                key={action.actionId}/>
         );
     }
 }
 
-MainActionPanel.propTypes = {
+ActionPanel.propTypes = {
     actions: PropTypes.array.isRequired,
-    ajaxService: PropTypes.object.isRequired
+    ajaxService: PropTypes.object.isRequired,
+    isImpActionPanel: PropTypes.bool.isRequired
 };
 
-export default MainActionPanel;
+export default ActionPanel;

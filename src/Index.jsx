@@ -1,20 +1,21 @@
 import React from 'react';
 import ActionCard from './ActionCard/ActionCard.jsx';
 import AjaxService from './ajax-service/AjaxService.jsx';
-import MainActionPanel from './MainActionPanel/MainActionPanel.jsx';
+import ActionPanel from './ActionPanel/ActionPanel.jsx';
 
 class Index extends React.Component {
     constructor(){
         super();
         this.state = {
             ajaxService: new AjaxService(),
-            actions: {},
-            importantActions: {}
+            actions: [],
+            importantActions: []
         };
         this.getActions();
         this.getImportantActions();
 
         this.renderImportantActions = this.renderImportantActions.bind(this);
+        this.markImportantActions = this.markImportantActions.bind(this);
     }
 
     getActions() {
@@ -25,16 +26,32 @@ class Index extends React.Component {
         //TODO: don't hardcode the userID in the getImportantActionsForUser call
         this.state.ajaxService.getImportantActionsForUser(1).then(response => {
             if (!response.error) {
-                this.setState({importantActions: response.data});
+                this.setState({importantActions: response.data}, this.markImportantActions());
             }
         });
+    }
+
+    markImportantActions () {
+        for (let i = 0, len = this.state.actions.length; i < len; i++) {
+            let action = this.state.actions[i];
+            let index = this.state.importantActions.indexOf(action);
+            if (index !== -1) {
+                action.isImportant = true;
+            } else {
+                action.isImportant = false;
+            }
+        }
     }
 
     renderImportantActions () {
         if (this.state.importantActions.length > 0) {
             return (
                 <div>
-                    <MainActionPanel actions={this.state.importantActions} ajaxService={this.state.ajaxService}/>
+                    <ActionPanel
+                        actions={this.state.importantActions}
+                        ajaxService={this.state.ajaxService}
+                        isImpActionPanel={true}
+                    />
                 </div>
             )
         }
@@ -46,7 +63,11 @@ class Index extends React.Component {
             return (
                 <div>
                   {this.renderImportantActions()}
-                  <MainActionPanel actions={this.state.actions} ajaxService={this.state.ajaxService}/>
+                  <ActionPanel
+                      actions={this.state.actions}
+                      ajaxService={this.state.ajaxService}
+                      isImpActionPanel={false}
+                  />
                 </div>
             );
         }
