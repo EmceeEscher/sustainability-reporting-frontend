@@ -1,5 +1,6 @@
 import 'whatwg-fetch';
 
+//TODO: need to update this to a real URL
 const serviceUrl = 'http://localhost:5000';
 
 class AjaxService {
@@ -8,8 +9,13 @@ class AjaxService {
     }
 
     getImportantActionsForUser (userID) {
-        //TODO: figure out how to get userID
         return fetch(serviceUrl + '/users/' + userID + '/importantActions').then(response => response.json());
+    }
+
+    updateImportantActionForUser (userID, actionID, updateMethod) {
+        return fetch(
+            (serviceUrl + '/users/' + userID + '/importantActions/' + actionID),
+            {method: updateMethod});
     }
 
     getMetricForAction(actionId) {

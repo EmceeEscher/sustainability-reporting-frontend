@@ -34,8 +34,10 @@ class ActionCard extends React.Component {
     toggleImportant () {
         if(this.state.starIcon === emptyStar) {
             this.setState({starIcon: fullStar});
+            this.props.updateImportantActions(this.props.actionData.actionId, "POST");
         } else {
             this.setState({starIcon: emptyStar});
+            this.props.updateImportantActions(this.props.actionData.actionId, "DELETE");
         }
     }
 
@@ -78,7 +80,8 @@ class ActionCard extends React.Component {
 ActionCard.propTypes = {
     actionData: PropTypes.object.isRequired,
     ajaxService: PropTypes.object.isRequired,
-    isImportant: PropTypes.bool.isRequired
+    isImportant: PropTypes.bool.isRequired,
+    updateImportantActions: PropTypes.func.isRequired
 };
 
 export default ActionCard;
